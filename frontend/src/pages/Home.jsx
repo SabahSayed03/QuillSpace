@@ -32,7 +32,8 @@ const Home = () => {
 
   const exportCSV = async () => {
     try {
-      window.location.href = "http://localhost:5000/api/posts/export/csv";
+      // Use relative path so Render (or other hosts) can proxy /api requests to the backend
+      window.location.href = "/api/posts/export/csv";
     } catch {
       toast.error("Failed to export CSV");
     }
