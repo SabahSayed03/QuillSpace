@@ -1,3 +1,6 @@
+# Ignore build output and generated redirects
+/dist/
+/public/_redirects
 # Logs
 logs
 *.log

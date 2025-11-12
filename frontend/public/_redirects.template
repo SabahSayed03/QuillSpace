@@ -1,0 +1,4 @@
+/api/*  ${BACKEND_URL}/:splat  200
+
+// NOTE: Do NOT commit `public/_redirects` with your real backend URL.
+// The build step will generate `public/_redirects` from BACKEND_URL env var.
