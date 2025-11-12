@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*  Global Styles */
+body {
+  @apply bg-lightBg text-gray-800 dark:bg-darkBg dark:text-gray-100 transition-colors duration-300 font-sans;
+}
+
+/* Optional: Smooth font and layout consistency */
+* {
+  @apply box-border;
+}
+
+a {
+  @apply text-primary hover:text-secondary font-medium;
+}
+
+button {
+  @apply px-4 py-2 rounded-lg bg-primary text-white hover:bg-secondary transition-colors duration-200;
+}
+
+h1, h2, h3, h4, h5 {
+  @apply font-semibold text-gray-900 dark:text-gray-100;
+}
