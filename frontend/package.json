@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/generateRedirects.js",
+    "prebuild": "node scripts/generateRedirects.cjs",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
