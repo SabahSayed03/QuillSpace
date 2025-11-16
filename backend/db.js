@@ -20,13 +20,17 @@ db.getConnection((err, connection) => {
   }
 });
 
-// Optional: listen for pool errors (e.g., disconnects)
+// Listen for pool errors
 db.on('error', (err) => {
   console.error('MySQL Pool Error:', err);
   if (err.code === 'PROTOCOL_CONNECTION_LOST') {
     console.error('Database connection was lost. Attempting to reconnect...');
-    // No need for manual reconnect with pool, but you can log or alert here.
   }
 });
+
+// Keep the connection alive by pinging every 60 seconds
+setInterval(() => {
+  db.query('SELECT 1').catch(err => console.error('Ping error:', err));
+}, 60000);
 
 export default db.promise();
