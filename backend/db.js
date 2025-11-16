@@ -11,6 +11,7 @@ const db = mysql.createPool({
   queueLimit: 0,
 });
 
+// Log connection success or failure
 db.getConnection((err, connection) => {
   if (err) {
     console.error("Database connection failed:", err.message);
@@ -20,7 +21,7 @@ db.getConnection((err, connection) => {
   }
 });
 
-// Listen for pool errors
+// Log pool errors (e.g., connection lost)
 db.on('error', (err) => {
   console.error('MySQL Pool Error:', err);
   if (err.code === 'PROTOCOL_CONNECTION_LOST') {
@@ -28,9 +29,15 @@ db.on('error', (err) => {
   }
 });
 
-// Keep the connection alive by pinging every 60 seconds
-setInterval(() => {
-  db.query('SELECT 1').catch(err => console.error('Ping error:', err));
+const promisePool = db.promise();
+
+// Keep connection alive by pinging every 60 seconds
+setInterval(async () => {
+  try {
+    await promisePool.query('SELECT 1');
+  } catch (err) {
+    console.error('Ping error:', err);
+  }
 }, 60000);
 
-export default db.promise();
+export default promisePool;
