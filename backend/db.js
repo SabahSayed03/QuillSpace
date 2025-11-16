@@ -6,6 +6,9 @@ const db = mysql.createPool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   port: process.env.DB_PORT,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 });
 
 db.getConnection((err, connection) => {
@@ -17,4 +20,13 @@ db.getConnection((err, connection) => {
   }
 });
 
-export default db;
+// Optional: listen for pool errors (e.g., disconnects)
+db.on('error', (err) => {
+  console.error('MySQL Pool Error:', err);
+  if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+    console.error('Database connection was lost. Attempting to reconnect...');
+    // No need for manual reconnect with pool, but you can log or alert here.
+  }
+});
+
+export default db.promise();
